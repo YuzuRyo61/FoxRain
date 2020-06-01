@@ -1,7 +1,8 @@
 from Crypto.PublicKey import RSA
 from Crypto import Random
 
-from requests_http_signature import HTTPSignatureHeaderAuth
+# from requests_http_signature import HTTPSignatureHeaderAuth
+
 
 def generate_key():
     """

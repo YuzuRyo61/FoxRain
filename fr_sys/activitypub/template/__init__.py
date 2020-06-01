@@ -5,8 +5,8 @@ AP_HEADER = {
     ]
 }
 
-from .request import isAPRequest # noqa: E402, E261
-from .response import ActivityPubResponse # noqa: E402, E261
+from .request import isAPRequest  # noqa: E402
+from .response import ActivityPubResponse  # noqa: E402
 
 __all__ = [
     "ActivityPubResponse",
