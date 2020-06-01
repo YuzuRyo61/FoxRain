@@ -1,3 +1,10 @@
 {
-    "python.pythonPath": "C:\\Users\\YuzuRyo61\\.virtualenvs\\FoxRain-Fa8fewef\\Scripts\\python.exe"
+    "python.pythonPath": "C:\\Users\\YuzuRyo61\\.virtualenvs\\FoxRain-Fa8fewef\\Scripts\\python.exe",
+    "python.linting.pylintEnabled": false,
+    "python.linting.flake8Enabled": true,
+    "python.linting.lintOnSave": true,
+    "python.formatting.provider": "autopep8",
+    "python.linting.flake8Args": [
+        "--max-line-length=160",
+    ]
 }

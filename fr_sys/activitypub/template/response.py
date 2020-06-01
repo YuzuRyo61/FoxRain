@@ -4,10 +4,11 @@ from django.http.response import HttpResponse
 
 from . import AP_HEADER
 
+
 def ActivityPubResponse(bodyDict: dict):
-    if bodyDict.get("@content") == None:
+    if bodyDict.get("@content") is None:
         bodyDict.update(AP_HEADER)
-    
+
     return HttpResponse(
         json.dumps(
             bodyDict,

@@ -1,3 +1,6 @@
+from .request import isAPRequest
+from .response import ActivityPubResponse
+
 AP_HEADER = {
     "@content": [
         "https://www.w3.org/ns/activitystreams",
@@ -5,8 +8,6 @@ AP_HEADER = {
     ]
 }
 
-from .response import ActivityPubResponse
-from .request import isAPRequest
 
 __all__ = [
     "ActivityPubResponse",

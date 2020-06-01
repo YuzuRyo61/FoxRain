@@ -6,11 +6,12 @@ from django.core.validators import RegexValidator
 
 from fr_sys.lib import generate_key
 
+
 class UserManager(BaseUserManager):
     def create_user(self, email, username, password=None):
         if not username:
             raise ValueError("User must have an username")
-        
+
         user = self.model(
             username=username,
             email=email
@@ -21,7 +22,7 @@ class UserManager(BaseUserManager):
         user.publicKey = kp[1]
         user.save(using=self._db)
         return user
-    
+
     def create_superuser(self, email, username, password):
         user = self.create_user(
             email=email,
@@ -33,6 +34,7 @@ class UserManager(BaseUserManager):
         user.is_emailVerified = True
         user.save(using=self._db)
         return user
+
 
 class User(AbstractBaseUser, PermissionsMixin):
     uuid = models.UUIDField(
@@ -107,10 +109,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     @property
     def is_staff(self):
         return self.moderator
-    
+
     @property
     def is_superuser(self):
         return self.administrator
+
 
 class FediverseServer(models.Model):
     uuid = models.UUIDField(
@@ -127,6 +130,7 @@ class FediverseServer(models.Model):
     is_deprecated = models.BooleanField(
         default=False
     )
+
 
 class FediverseUser(models.Model):
     uuid = models.UUIDField(
@@ -171,6 +175,7 @@ class FediverseUser(models.Model):
     updated = models.DateTimeField(
         auto_now=True
     )
+
 
 class Emoji(models.Model):
     uuid = models.UUIDField(
