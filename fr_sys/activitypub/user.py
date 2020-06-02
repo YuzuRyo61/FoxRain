@@ -1,4 +1,3 @@
-import logging
 from django.conf import settings
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
@@ -10,8 +9,6 @@ from django.http.response import (
 
 from .template import AP_HEADER, ActivityPubResponse, isAPRequest
 
-logger = logging.getLogger("fr_sys.activitypub.inbox")
-
 
 def User(request, uuid):
     userInfo = get_object_or_404(get_user_model(), uuid=uuid)
@@ -21,8 +18,6 @@ def User(request, uuid):
 
     if not isAPRequest(request):
         return HttpResponse()  # to-do: redirect to web profile page
-
-    logger.debug("Reading ActivityPub")
 
     return ActivityPubResponse(request, {
         **AP_HEADER,
