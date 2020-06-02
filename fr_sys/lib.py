@@ -38,7 +38,7 @@ def __signature_resolver(key_id, algorithm):
 def verify_signature(request):
     session = requests.Session()
     session.headers = dict(request.headers)
-    session.headers["Authorization"] = "Signature " + request.headers.pop("Signature")
+    session.headers["Authorization"] = "Signature " + session.headers.pop("Signature")
     HTTPSignatureHeaderAuth.verify(session, __signature_resolver)
 
 
