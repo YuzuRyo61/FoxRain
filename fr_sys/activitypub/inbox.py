@@ -2,7 +2,7 @@ import logging
 import json
 from pprint import pformat
 
-from django.http.response import HttpResponse, HttpResponseBadRequest
+from django.http.response import HttpResponse, HttpResponseBadRequest, HttpResponseNotAllowed
 from django.views.decorators.csrf import csrf_exempt
 
 from fr_sys.lib import verify_signature
@@ -14,6 +14,9 @@ logger = logging.getLogger("fr_sys.activitypub.inbox")
 
 @csrf_exempt
 def Inbox(request, uuid=None):
+    if request.method != "POST":
+        return HttpResponseNotAllowed("POST")
+
     if not isAPRequestContent(request):
         return HttpResponseBadRequest()
 
@@ -26,5 +29,5 @@ def Inbox(request, uuid=None):
     logger.debug("Recieved Activity: ")
     logger.debug(pformat(apbody))
 
-    verify_signature(request)
+    # verify_signature(request)
     return HttpResponse(status=202)
