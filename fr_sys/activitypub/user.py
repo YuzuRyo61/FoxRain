@@ -24,7 +24,7 @@ def User(request, uuid):
 
     logger.debug("Reading ActivityPub")
 
-    return ActivityPubResponse({
+    return ActivityPubResponse(request, {
         **AP_HEADER,
         "type": "Service" if userInfo.is_bot else "Person",
         "id": f"https://{settings.FR_ENDPOINT}{reverse_lazy('AP:user', kwargs={'uuid': userInfo.uuid})}",
@@ -37,7 +37,7 @@ def User(request, uuid):
         # "endpoints": {
         # "sharedInbox": f"https://{settings.FR_ENDPOINT}{reverse_lazy('AP:inbox_share', kwargs={'uuid': userInfo.uuid})}"
         # }
-        "url": f"https://{settings.FR_ENDPOINT}",  # to-do: public page
+        "url": f"https://{settings.FR_ENDPOINT}{reverse_lazy('AP:user', kwargs={'uuid': userInfo.uuid})}",  # to-do: public page
         "preferredUsername": userInfo.username,
         "name": None if userInfo.display_name == "" else userInfo.display_name,
         "summary": None if userInfo.description == "" else userInfo.description,
