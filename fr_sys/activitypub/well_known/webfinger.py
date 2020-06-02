@@ -28,7 +28,7 @@ def webfinger(request):
         "subject": f"acct:{userInfo.username}@{settings.FR_ENDPOINT}",
         "aliases": [
             f"https://{settings.FR_ENDPOINT}{reverse_lazy('AP:user', kwargs={'uuid': userInfo.uuid})}",
-            f"https://{settings.FR_ENDPOINT}"  # todo: specify user's endpoint
+            # f"https://{settings.FR_ENDPOINT}"  # todo: specify user's endpoint
         ],
         "links": [
             {
@@ -36,14 +36,14 @@ def webfinger(request):
                 "type": "application/activity+json",
                 "href": f"https://{settings.FR_ENDPOINT}{reverse_lazy('AP:user', kwargs={'uuid': userInfo.uuid})}",
             },
-            {
-                "rel": "http://webfinger.net/rel/profile-page",
-                "type": "text/html",
-                "href": f"https://{settings.FR_ENDPOINT}"  # todo: specify user's endpoint
-            },
-            {
-                "rel": "http://ostatus.org/schema/1.0/subscribe",
-                "template": f"https://{settings.FR_ENDPOINT}"  # todo: specify follow dialog endpoint
-            }
+            # {
+            #     "rel": "http://webfinger.net/rel/profile-page",
+            #     "type": "text/html",
+            #     "href": f"https://{settings.FR_ENDPOINT}"  # todo: specify user's endpoint
+            # },
+            # {
+            #     "rel": "http://ostatus.org/schema/1.0/subscribe",
+            #     "template": f"https://{settings.FR_ENDPOINT}"  # todo: specify follow dialog endpoint
+            # }
         ]
     })
