@@ -29,5 +29,5 @@ def Inbox(request, uuid=None):
     logger.debug("Recieved Activity: ")
     logger.debug(pformat(apbody))
 
-    # verify_signature(request)
+    verify_signature(request)
     return HttpResponse(status=202)
