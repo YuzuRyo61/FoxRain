@@ -11,24 +11,24 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import toml
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+with open("FoxRain/config.toml", mode="r") as frcf:
+    FOXRAIN = toml.load(frcf)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '-=rth4r4$iv!2k_+t*+@!n=!*zxbf4a@5#8x!f)b8dy0jycsr%'
+SECRET_KEY = FOXRAIN["core"]["security"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = FOXRAIN["development"]["debug"]
 
-ALLOWED_HOSTS = [
-    '127.0.0.1'
-]
-
+ALLOWED_HOSTS = FOXRAIN["core"]["hosts"]
 
 # Application definition
 
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_celery_results',
     'fr_sys',
 ]
 
@@ -106,9 +107,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
-LANGUAGE_CODE = 'ja-jp'
+LANGUAGE_CODE = FOXRAIN["locale"]["language"]
 
-TIME_ZONE = 'Asia/Tokyo'
+TIME_ZONE = FOXRAIN["locale"]["timezone"]
 
 USE_I18N = True
 
@@ -124,4 +125,8 @@ STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'fr_sys.User'
 
-FR_ENDPOINT = "example.com"
+FR_ENDPOINT = FOXRAIN["core"]["endpoint"]
+
+CELERY_BROKER_URL = FOXRAIN["worker"]["redis"]
+
+CELERY_RESULT_BACKEND = "django-db"

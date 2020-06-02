@@ -56,10 +56,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
     display_name = models.CharField(
         max_length=255,
-        blank=True
+        blank=True,
+        null=True
     )
     description = models.TextField(
-        blank=True
+        blank=True,
+        null=True
     )
     is_active = models.BooleanField(
         default=True
@@ -92,10 +94,12 @@ class User(AbstractBaseUser, PermissionsMixin):
         auto_now=True
     )
     publicKey = models.TextField(
-        editable=False
+        editable=False,
+        unique=True
     )
     privateKey = models.TextField(
-        editable=False
+        editable=False,
+        unique=True
     )
 
     objects = UserManager()
@@ -124,6 +128,10 @@ class FediverseServer(models.Model):
         max_length=255,
         unique=True
     )
+    sharedInbox = models.URLField(
+        blank=True,
+        null=True
+    )
     is_block = models.BooleanField(
         default=False
     )
@@ -136,6 +144,9 @@ class FediverseUser(models.Model):
     uuid = models.UUIDField(
         primary_key=True,
         default=uuid.uuid4
+    )
+    id = models.URLField(
+        unique=True
     )
     username = models.CharField(
         max_length=32,
@@ -160,14 +171,37 @@ class FediverseUser(models.Model):
     is_bot = models.BooleanField(
         default=False
     )
+    is_manualFollow = models.BooleanField(
+        default=False
+    )
     is_silence = models.BooleanField(
         default=False
     )
     is_suspend = models.BooleanField(
         default=False
     )
+    inbox = models.URLField(
+        unique=True
+    )
+    outbox = models.URLField(
+        blank=True
+    )
+    featured = models.URLField(
+        blank=True
+    )
+    followers = models.URLField(
+        blank=True
+    )
+    URL = models.URLField(
+        blank=True
+    )
     publicKey = models.TextField(
-        editable=False
+        editable=False,
+        unique=True
+    )
+    KeyId = models.CharField(
+        max_length=255,
+        unique=True
     )
     registered = models.DateTimeField(
         auto_now_add=True

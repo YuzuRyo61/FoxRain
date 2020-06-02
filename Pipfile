@@ -15,6 +15,9 @@ twisted = {extras = ["http2", "tls"],version = "*"}
 requests = "*"
 requests-http-signature = "*"
 pycryptodome = "*"
+celery = "*"
+django-celery-results = "*"
+redis = "*"
 
 [requires]
 python_version = "3"
@@ -22,3 +25,4 @@ python_version = "3"
 [scripts]
 manage = "python manage.py"
 start = "daphne -b 0.0.0.0 -p 3000 FoxRain.asgi:application"
+worker = "celery -A FoxRain worker -l info"
