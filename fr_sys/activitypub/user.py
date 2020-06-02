@@ -24,10 +24,10 @@ def User(request, uuid):
         "type": "Service" if userInfo.is_bot else "Person",
         "id": f"https://{settings.FR_ENDPOINT}{reverse_lazy('AP:user', kwargs={'uuid': userInfo.uuid})}",
         "inbox": f"https://{settings.FR_ENDPOINT}{reverse_lazy('AP:inbox', kwargs={'uuid': userInfo.uuid})}",
-        "outbox": f"https://{settings.FR_ENDPOINT}{reverse_lazy('AP:outbox', kwargs={'uuid': userInfo.uuid})}",
-        "followers": f"https://{settings.FR_ENDPOINT}{reverse_lazy('AP:followers', kwargs={'uuid': userInfo.uuid})}",
-        "following": f"https://{settings.FR_ENDPOINT}{reverse_lazy('AP:following', kwargs={'uuid': userInfo.uuid})}",
-        "featured": f"https://{settings.FR_ENDPOINT}{reverse_lazy('AP:featured', kwargs={'uuid': userInfo.uuid})}",
+        # "outbox": f"https://{settings.FR_ENDPOINT}{reverse_lazy('AP:outbox', kwargs={'uuid': userInfo.uuid})}",
+        # "followers": f"https://{settings.FR_ENDPOINT}{reverse_lazy('AP:followers', kwargs={'uuid': userInfo.uuid})}",
+        # "following": f"https://{settings.FR_ENDPOINT}{reverse_lazy('AP:following', kwargs={'uuid': userInfo.uuid})}",
+        # "featured": f"https://{settings.FR_ENDPOINT}{reverse_lazy('AP:featured', kwargs={'uuid': userInfo.uuid})}",
         # "sharedInbox": f"https://{settings.FR_ENDPOINT}{reverse_lazy('AP:inbox_share', kwargs={'uuid': userInfo.uuid})}",
         # "endpoints": {
         # "sharedInbox": f"https://{settings.FR_ENDPOINT}{reverse_lazy('AP:inbox_share', kwargs={'uuid': userInfo.uuid})}"
