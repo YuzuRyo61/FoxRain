@@ -25,5 +25,5 @@ def Inbox(request, uuid=None):
     logger.debug("Recieved Activity: ")
     logger.debug(pformat(apbody))
 
-    processInbox.delay(request, {})
+    processInbox.delay(request, apbody)
     return HttpResponse(status=202)

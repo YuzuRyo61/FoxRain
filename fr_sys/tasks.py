@@ -30,6 +30,7 @@ def sendAPData(targetUrl: str, fromUser: str, body: dict):
         return res.status_code
 
 
-@shared_task
+@shared_task()
 def processInbox(request, body, targetUser=None):
     verify_signature(request)
+    return
