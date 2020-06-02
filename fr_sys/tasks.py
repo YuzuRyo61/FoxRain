@@ -5,12 +5,12 @@ import logging
 from celery import shared_task
 import requests
 
-from fr_sys.lib import sign_header, addDefaultHeader
+from fr_sys.lib import sign_header, addDefaultHeader, verify_signature
 
 logger = logging.getLogger("fr_sys.tasks")
 
 
-@shared_task(default_retry_delays=120)
+@shared_task(default_retry_delays=180)
 def sendAPData(targetUrl: str, fromUser: str, body: dict):
     logger.info(f"Sending ActivityPub data: {targetUrl}")
     logger.debug("Data: ")
@@ -31,5 +31,5 @@ def sendAPData(targetUrl: str, fromUser: str, body: dict):
 
 
 @shared_task
-def processInbox(body, targetUser=None):
-    pass
+def processInbox(request, body, targetUser=None):
+    verify_signature(request)

@@ -1,3 +1,4 @@
+import requests
 from Crypto.PublicKey import RSA
 from Crypto import Random
 from requests_http_signature import HTTPSignatureHeaderAuth
@@ -27,6 +28,17 @@ def sign_header(username):
         headers=["(request-target)", "host", "date"],
         key_id=f"https://{settings.FR_ENDPOINT}{reverse_lazy('AP:user', kwargs={'uuid': userInfo.uuid})}"
     )
+
+
+def __signature_resolver(key_id, algorithm):
+    print(key_id)
+    print(algorithm)
+
+
+def verify_signature(request):
+    session = requests.Session()
+    session.headers["Authorization"] = "Signature " + request.headers["Signature"]
+    HTTPSignatureHeaderAuth.verify(session, __signature_resolver)
 
 
 def addDefaultHeader(header={}, isGETMethod=False):
