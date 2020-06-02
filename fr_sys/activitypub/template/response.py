@@ -6,7 +6,7 @@ from . import AP_HEADER
 
 
 def ActivityPubResponse(request, bodyDict: dict):
-    if bodyDict.get("@content") is None:
+    if bodyDict.get("@context") is None:
         bodyDict.update(AP_HEADER)
 
     content_type = "application/activity+json; charset=utf-8"
