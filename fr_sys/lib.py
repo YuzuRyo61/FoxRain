@@ -89,7 +89,7 @@ def verify_signature(request, targetUser, method="POST", path=None, signature=No
         _body_digest(body)
     )
 
-    if targetUser.keyId != sign_parse["keyId"]:
+    if targetUser.KeyId != sign_parse["keyId"]:
         logger.error("Signature keyId does not match")
         return False
 
