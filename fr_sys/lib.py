@@ -138,6 +138,10 @@ def regFedUser(uri):
         if host == '':
             logger.error("unknown host")
             return None
+        else:
+            fediSrv = models.FediverseServer(
+                address=host
+            )
 
         if not isAPContext(res):
             logger.error("Response is not ActivityPub")
@@ -163,21 +167,25 @@ def regFedUser(uri):
     else:
         sharedInbox = res["sharedInbox"]
 
+    if sharedInbox is not None:
+        fediSrv.sharedInbox = sharedInbox
+
+    fediSrv.save()
+
     return models.FediverseUser(
+        id=res["id"],
         username=res["preferredUsername"],
+        server=fediSrv,
         display_name=res.get("name"),
         description=res.get("summary"),
-        Host=host,
-        Inbox=res["inbox"],
-        Outbox=res.get("outbox"),
-        SharedInbox=sharedInbox,
-        Featured=res.get("featured"),
-        Followers=res.get("followers"),
-        Following=res.get("following"),
-        Uri=res["id"],
-        Url=res.get("url"),
-        publicKey=publicKey,
-        keyId=keyId,
+        is_bot=True if res["type"] == "Service" else False,
         is_manualFollow=res.get("manuallyApprovesFollowers", False),
-        is_bot=True if res["type"] == "Service" else False
+        inbox=res["inbox"],
+        outbox=res.get("outbox"),
+        featured=res.get("featured"),
+        followers=res.get("followers"),
+        following=res.get("following"),
+        URL=res.get("url"),
+        publicKey=publicKey,
+        KeyId=keyId
     )

@@ -8,6 +8,8 @@ from django.views.decorators.csrf import csrf_exempt
 # from fr_sys.lib import verify_signature
 # from fr_sys.tasks import processInbox
 from fr_sys.activitypub.template.request import isAPRequestContent
+from fr_sys.models import FediverseUser
+from fr_sys.lib import isAPContext, regFedUser
 
 logger = logging.getLogger("fr_sys.activitypub.inbox")
 
@@ -26,7 +28,18 @@ def Inbox(request, uuid=None):
         logger.error("JSON decode error")
         return HttpResponseBadRequest()
 
+    if not isAPContext(apbody):
+        logger.error("This is not ActivityPub body")
+        return HttpResponseBadRequest()
+
     logger.debug("Recieved Activity: ")
     logger.debug(pformat(apbody))
+
+    try:
+        fromUsr = FediverseUser.objects.get(id=apbody["actor"])
+    except FediverseUser.DoesNotExist:
+        fromUsr = regFedUser(apbody["actor"])
+        if fromUsr is None:
+            return HttpResponseBadRequest()
 
     return HttpResponse(status=202)

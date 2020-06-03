@@ -201,6 +201,9 @@ class FediverseUser(models.Model):
     followers = models.URLField(
         blank=True
     )
+    following = models.URLField(
+        blank=True
+    )
     URL = models.URLField(
         blank=True
     )
@@ -234,5 +237,6 @@ class Emoji(models.Model):
     remote = models.ForeignKey(
         FediverseServer,
         on_delete=models.CASCADE,
-        blank=True
+        blank=True,
+        related_name="emojis"
     )
