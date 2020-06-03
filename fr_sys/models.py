@@ -1,6 +1,8 @@
 import uuid
 
+from django.conf import settings
 from django.db import models
+from django.urls import reverse_lazy
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.core.validators import RegexValidator
 
@@ -117,6 +119,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     @property
     def is_superuser(self):
         return self.administrator
+
+    @property
+    def KeyId(self):
+        return f"https://{settings.FR_ENDPOINT}{reverse_lazy('AP:user', kwargs={'uuid': self.uuid})}#main-key"
 
 
 class FediverseServer(models.Model):
