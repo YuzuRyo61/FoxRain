@@ -76,20 +76,22 @@ def _signature_verify(signed_string, signature, publicKey):
     return sign.verify(digest, signature)
 
 
-def verify_signature(request, targetUser, method="POST", path=None, signature=None, body=None):
-    sign_parse = _signature_parse(signature)
+def verify_signature(method, path, headers, body):
+    sign_parse = _signature_parse(headers.get("Signature"))
     if sign_parse is None:
         logger.error("Signature parse failed")
         return False
-    signed_string = _signature_body(
+    signed_string, _ = _signature_body(
         sign_parse["headers"],
         method,
         path,
-        request.headers,
+        headers,
         _body_digest(body)
     )
 
-    if targetUser.KeyId != sign_parse["keyId"]:
+    try:
+        targetUser = models.FediverseUser.objects.get(id=sign_parse["keyId"])
+    except models.FediverseUser.DoesNotExist:
         logger.error("Signature keyId does not match")
         return False
 

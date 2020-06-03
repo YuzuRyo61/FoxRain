@@ -46,7 +46,7 @@ def Inbox(request, uuid=None):
         else:
             fromUsr.save()
 
-    if not verify_signature(request, fromUsr, request.method, request.path, request.headers.get("Signature"), request.body):
+    if not verify_signature(request.method, request.path, request.headers, request.body):
         logger.error("Signature verification failed.")
         return HttpResponseBadRequest()
 
