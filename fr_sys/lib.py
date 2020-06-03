@@ -90,7 +90,7 @@ def verify_signature(method, path, headers, body):
     )
 
     try:
-        targetUser = models.FediverseUser.objects.get(id=sign_parse["keyId"])
+        targetUser = models.FediverseUser.objects.get(KeyId=sign_parse["keyId"])
     except models.FediverseUser.DoesNotExist:
         logger.error("Signature keyId does not match")
         return False
