@@ -37,9 +37,13 @@ def Inbox(request, uuid=None):
 
     try:
         fromUsr = FediverseUser.objects.get(id=apbody["actor"])
+        logger.debug("This user is known")
     except FediverseUser.DoesNotExist:
+        logger.debug("This user doesn't known, creating.")
         fromUsr = regFedUser(apbody["actor"])
         if fromUsr is None:
             return HttpResponseBadRequest()
+        else:
+            fromUsr.save()
 
     return HttpResponse(status=202)

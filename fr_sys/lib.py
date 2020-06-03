@@ -139,9 +139,14 @@ def regFedUser(uri):
             logger.error("unknown host")
             return None
         else:
-            fediSrv = models.FediverseServer(
-                address=host
-            )
+            try:
+                fediSrv = models.FediverseServer.objects.get(
+                    address=host
+                )
+            except models.FediverseServer.DoesNotExist:
+                fediSrv = models.FediverseServer(
+                    address=host
+                )
 
         if not isAPContext(res):
             logger.error("Response is not ActivityPub")
@@ -172,6 +177,7 @@ def regFedUser(uri):
 
     fediSrv.save()
 
+    logger.info("New Fediverse user fetched.")
     return models.FediverseUser(
         id=res["id"],
         username=res["preferredUsername"],
