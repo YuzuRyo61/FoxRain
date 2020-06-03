@@ -5,7 +5,7 @@ import logging
 from celery import shared_task
 import requests
 
-from fr_sys.lib import sign_header, addDefaultHeader, verify_signature
+from fr_sys.lib import sign_header, addDefaultHeader
 
 logger = logging.getLogger("fr_sys.tasks")
 
@@ -31,6 +31,5 @@ def sendAPData(targetUrl: str, fromUser: str, body: dict):
 
 
 @shared_task()
-def processInbox(request, body, targetUser=None):
-    verify_signature(request)
+def processInbox(request, apbody, fromUser, targetUser=None):
     return

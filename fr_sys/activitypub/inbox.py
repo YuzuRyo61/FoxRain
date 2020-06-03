@@ -9,9 +9,11 @@ from django.http.response import (
     HttpResponseForbidden
 )
 from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import get_object_or_404
+from django.contrib.auth import get_user_model
 
 from fr_sys.lib import verify_signature
-# from fr_sys.tasks import processInbox
+from fr_sys.tasks import processInbox
 from fr_sys.activitypub.template.request import isAPRequestContent
 from fr_sys.models import FediverseUser
 from fr_sys.lib import isAPContext, regFedUser
@@ -23,6 +25,8 @@ logger = logging.getLogger("fr_sys.activitypub.inbox")
 def Inbox(request, uuid=None):
     if request.method != "POST":
         return HttpResponseNotAllowed("POST")
+
+    targetUsr = get_object_or_404(get_user_model, uuid=uuid)
 
     if not isAPRequestContent(request):
         return HttpResponseBadRequest()
@@ -57,4 +61,5 @@ def Inbox(request, uuid=None):
     else:
         logger.info("Signature verified.")
 
+    processInbox.delay(request, apbody, fromUsr, targetUsr)
     return HttpResponse(status=202)
