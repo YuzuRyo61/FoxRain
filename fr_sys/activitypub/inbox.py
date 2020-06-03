@@ -5,7 +5,7 @@ from pprint import pformat
 from django.http.response import HttpResponse, HttpResponseBadRequest, HttpResponseNotAllowed
 from django.views.decorators.csrf import csrf_exempt
 
-from fr_sys.lib import verify_signature
+# from fr_sys.lib import verify_signature
 # from fr_sys.tasks import processInbox
 from fr_sys.activitypub.template.request import isAPRequestContent
 
@@ -29,5 +29,4 @@ def Inbox(request, uuid=None):
     logger.debug("Recieved Activity: ")
     logger.debug(pformat(apbody))
 
-    verify_signature(request)
     return HttpResponse(status=202)
