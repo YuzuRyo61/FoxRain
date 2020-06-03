@@ -145,6 +145,9 @@ class FediverseServer(models.Model):
         default=False
     )
 
+    def __str__(self):
+        return self.address
+
 
 class FediverseUser(models.Model):
     uuid = models.UUIDField(
@@ -215,6 +218,9 @@ class FediverseUser(models.Model):
     updated = models.DateTimeField(
         auto_now=True
     )
+
+    def __str__(self):
+        return f"@{self.username}@{self.server}"
 
 
 class Emoji(models.Model):
