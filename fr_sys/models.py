@@ -206,11 +206,11 @@ class FediverseUser(models.Model):
     )
     publicKey = models.TextField(
         editable=False,
-        unique=True
+        blank=True
     )
     KeyId = models.CharField(
         max_length=255,
-        unique=True
+        blank=True
     )
     registered = models.DateTimeField(
         auto_now_add=True
