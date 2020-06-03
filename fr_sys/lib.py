@@ -70,7 +70,7 @@ def _body_digest(body: str):
 
 
 def _signature_verify(signed_string, signature, publicKey):
-    sign = PKCS1_v1_5.new(publicKey)
+    sign = PKCS1_v1_5.new(RSA.importKey(publicKey))
     digest = SHA256.new()
     digest.update(signed_string.encode("utf-8"))
     return sign.verify(digest, signature)
