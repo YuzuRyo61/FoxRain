@@ -81,7 +81,7 @@ def verify_signature(method, path, headers, body):
     if sign_parse is None:
         logger.error("Signature parse failed")
         return False
-    signed_string, _ = _signature_body(
+    signed_string = _signature_body(
         sign_parse["headers"],
         method,
         path,
