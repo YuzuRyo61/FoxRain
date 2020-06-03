@@ -15,9 +15,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.shortcuts import render
+
+
+def INDEX(request):
+    return render(request, "index.html")
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('AP/', include('fr_sys.activitypub.URLS')),
-    path('.well-known/', include('fr_sys.activitypub.URLS_WK'))
+    path('.well-known/', include('fr_sys.activitypub.URLS_WK')),
+    path('', INDEX, name="INDEX")
 ]

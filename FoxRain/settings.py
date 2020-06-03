@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_celery_results',
+    'webpack_loader',
     'fr_sys',
 ]
 
@@ -62,7 +63,9 @@ ROOT_URLCONF = 'FoxRain.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'template')
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -125,6 +128,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
+
 STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'fr_sys.User'
@@ -134,3 +141,13 @@ FR_ENDPOINT = FOXRAIN["core"]["endpoint"]
 CELERY_BROKER_URL = FOXRAIN["worker"]["redis"]
 
 CELERY_RESULT_BACKEND = "django-db"
+
+WEBPACK_LOADER = {
+   'DEFAULT': {
+       'CACHE': not DEBUG,
+       'BUNDLE_DIR_NAME': 'build/',
+       'TIMEOUT': None,
+       'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
+       'IGNORE': [r'.+\.hot-update.js', r'.+\.map']
+   }
+}

@@ -18,6 +18,7 @@ pycryptodome = "*"
 celery = "*"
 django-celery-results = "*"
 redis = "*"
+django-webpack-loader = "==0.7.0"
 
 [requires]
 python_version = "3"
