@@ -2,7 +2,12 @@ import logging
 import json
 from pprint import pformat
 
-from django.http.response import HttpResponse, HttpResponseBadRequest, HttpResponseNotAllowed
+from django.http.response import (
+    HttpResponse,
+    HttpResponseBadRequest,
+    HttpResponseNotAllowed,
+    HttpResponseForbidden
+)
 from django.views.decorators.csrf import csrf_exempt
 
 from fr_sys.lib import verify_signature
@@ -48,7 +53,7 @@ def Inbox(request, uuid=None):
 
     if not verify_signature(request.method, request.path, request.headers, request.body):
         logger.error("Signature verification failed.")
-        return HttpResponseBadRequest()
+        return HttpResponseForbidden()
     else:
         logger.info("Signature verified.")
 
