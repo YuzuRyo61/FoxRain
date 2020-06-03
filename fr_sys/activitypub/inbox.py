@@ -49,5 +49,7 @@ def Inbox(request, uuid=None):
     if not verify_signature(request.method, request.path, request.headers, request.body):
         logger.error("Signature verification failed.")
         return HttpResponseBadRequest()
+    else:
+        logger.info("Signature verified.")
 
     return HttpResponse(status=202)
