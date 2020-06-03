@@ -5,7 +5,7 @@ from pprint import pformat
 from django.http.response import HttpResponse, HttpResponseBadRequest, HttpResponseNotAllowed
 from django.views.decorators.csrf import csrf_exempt
 
-# from fr_sys.lib import verify_signature
+from fr_sys.lib import verify_signature
 # from fr_sys.tasks import processInbox
 from fr_sys.activitypub.template.request import isAPRequestContent
 from fr_sys.models import FediverseUser
@@ -45,5 +45,9 @@ def Inbox(request, uuid=None):
             return HttpResponseBadRequest()
         else:
             fromUsr.save()
+
+    if not verify_signature(request, fromUsr, request.method, request.path, request.headers.get("Signature"), request.body.decode('utf-8')):
+        logger.error("Signature verification failed.")
+        return HttpResponseBadRequest()
 
     return HttpResponse(status=202)
