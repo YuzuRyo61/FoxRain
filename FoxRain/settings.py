@@ -45,7 +45,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_celery_results',
     'webpack_loader',
+    'rest_framework',
     'fr_sys',
+    'api',
 ]
 
 MIDDLEWARE = [

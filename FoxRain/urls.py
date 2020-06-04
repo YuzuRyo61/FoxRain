@@ -14,17 +14,19 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.shortcuts import render
 
 
-def INDEX(request):
+def INDEX(request, path=None):
     return render(request, "index.html")
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/', include('api.urls')),
     path('AP/', include('fr_sys.activitypub.URLS')),
     path('.well-known/', include('fr_sys.activitypub.URLS_WK')),
-    path('', INDEX, name="INDEX")
+    path('', INDEX),
+    re_path(r'^(?P<path>.*)/$', INDEX, name="INDEX"),
 ]
