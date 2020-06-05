@@ -24,7 +24,7 @@ with open("FoxRain/config.toml", mode="r") as frcf:
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = FOXRAIN["core"]["security"]
+SECRET_KEY = FOXRAIN["core"]["secret"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = FOXRAIN["development"]["debug"]
@@ -76,6 +76,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'FoxRain.context_processors.endpoint',
             ],
         },
     },
@@ -87,12 +88,7 @@ WSGI_APPLICATION = 'FoxRain.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+DATABASES = FOXRAIN["database"]
 
 
 # Password validation

@@ -22,10 +22,13 @@ class Post(models.Model):
     )
     post_by = CurrentUserField(
         related_name="post",
-        blank=True
+        blank=True,
+        null=True
     )
     post_by_fed = models.ForeignKey(
         FediverseUser,
         on_delete=models.CASCADE,
-        related_name="post"
+        related_name="post",
+        blank=True,
+        null=True
     )

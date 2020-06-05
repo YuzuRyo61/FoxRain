@@ -11,7 +11,6 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
             'username',
             'display_name',
             'description',
-            'is_active',
             'is_bot',
             'is_manualFollow',
             'moderator',

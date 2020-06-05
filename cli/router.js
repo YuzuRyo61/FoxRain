@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 
 import Index from './pages/index.vue'
 import NotFound from './pages/NotFound.vue'
+import User from './pages/User.vue'
 
 Vue.use(VueRouter)
 
@@ -11,8 +12,13 @@ export default new VueRouter({
     routes: [
         {
             path: '/',
-            name: 'Index',
+            name: 'index',
             component: Index
+        },
+        {
+            path: '/@:username',
+            name: 'user',
+            component: User
         },
         {
             path: '*',
