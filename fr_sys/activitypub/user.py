@@ -29,7 +29,7 @@ def User(request, uuid):
         # "endpoints": {
         # "sharedInbox": f"https://{settings.FR_ENDPOINT}{reverse_lazy('AP:inbox_share', kwargs={'uuid': userInfo.uuid})}"
         # }
-        "url": f"https://{settings.FR_ENDPOINT}{reverse_lazy('AP:user', kwargs={'uuid': userInfo.uuid})}",  # to-do: public page
+        "url": f"https://{settings.FR_ENDPOINT}/@{userInfo.username}",  # to-do: public page
         "preferredUsername": userInfo.username,
         "name": None if userInfo.display_name == "" else userInfo.display_name,
         "summary": None if userInfo.description == "" else userInfo.description,
