@@ -1,11 +1,8 @@
 from django.conf import settings
-from django.urls import reverse_lazy
-from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
-from django.http.response import (
-    HttpResponse,
-    HttpResponseGone
-)
+from django.http.response import HttpResponseGone
+from django.shortcuts import get_object_or_404, redirect
+from django.urls import reverse_lazy
 
 from .template import AP_HEADER, ActivityPubResponse, isAPRequest
 
@@ -17,7 +14,7 @@ def User(request, uuid):
         return HttpResponseGone()
 
     if not isAPRequest(request):
-        return HttpResponse()  # to-do: redirect to web profile page
+        return redirect(f"/@{userInfo.username}")  # to-do: redirect to web profile page
 
     return ActivityPubResponse(request, {
         **AP_HEADER,
