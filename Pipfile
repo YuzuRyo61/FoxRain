@@ -20,6 +20,7 @@ django-celery-results = "*"
 redis = "*"
 django-webpack-loader = "==0.7.0"
 djangorestframework = "*"
+django-currentuser = "*"
 
 [requires]
 python_version = "3"
